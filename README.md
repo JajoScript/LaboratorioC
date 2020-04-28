@@ -9,7 +9,7 @@
 
 ## Trabajando para usted.
 
-<img src="./sourceImgs/a.gif" width="300" alt="gato trabajando">
+<img src="./sourceImgs/a.gif" width="300" alt="gato trabajando" style="border: solid 2px black">
 
 ## Enunciado.
 
