@@ -1,4 +1,4 @@
-# Laboratorio: Algoritmo y estructura de datos.
+# <span><img src="sourceImgs/a.png" width="25" alt="[c logo]"></span> Laboratorio: Algoritmo y estructura de datos.
 
 ## Terminos de uso y condiciones.
 
@@ -7,7 +7,7 @@
 
 ## Trabajando para usted.
 
-<img src="./sourceImgs/a.gif" width="300">
+<img src="./sourceImgs/a.gif" width="300" alt="gato trabajando">
 
 ## Enunciado.
 
