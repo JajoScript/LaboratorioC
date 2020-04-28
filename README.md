@@ -1,5 +1,7 @@
 # <span><img src="sourceImgs/a.png" width="25" alt="[c logo]"></span> Laboratorio: Algoritmo y estructura de datos.
 
+[![Run on Repl.it](https://repl.it/badge/github/JajoScript/LaboratorioC)](https://repl.it/github/JajoScript/LaboratorioC)
+
 ## Terminos de uso y condiciones.
 
 *   Este Respositorio se apropia al uso exclusivo de Javier Almarza y Vicente Salas.
