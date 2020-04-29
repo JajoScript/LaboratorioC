@@ -2,6 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/13f922c7c8514fb295a0845687878d2e)](https://app.codacy.com/manual/JajoScript/LaboratorioC?utm_source=github.com&utm_medium=referral&utm_content=JajoScript/LaboratorioC&utm_campaign=Badge_Grade_Dashboard)
 [![Run on Repl.it](https://repl.it/badge/github/JajoScript/LaboratorioC)](https://repl.it/github/JajoScript/LaboratorioC)
+![GitHub contributors](https://img.shields.io/github/contributors/JajoScript/LaboratorioC?color=green)
 
 ## Terminos de uso y condiciones.
 
