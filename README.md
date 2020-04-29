@@ -1,14 +1,14 @@
-# <span><img src="sourceImgs/a.png" width="25" alt="[c logo]"></span> Laboratorio: Algoritmo y estructura de datos.
+# <span><img src="sourceImgs/a.png" width="25" alt="[c logo]"></span> Laboratorio: Algoritmo y estructura de datos
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/13f922c7c8514fb295a0845687878d2e)](https://app.codacy.com/manual/JajoScript/LaboratorioC?utm_source=github.com&utm_medium=referral&utm_content=JajoScript/LaboratorioC&utm_campaign=Badge_Grade_Dashboard)
 [![Run on Repl.it](https://repl.it/badge/github/JajoScript/LaboratorioC)](https://repl.it/github/JajoScript/LaboratorioC)
 ![GitHub contributors](https://img.shields.io/github/contributors/JajoScript/LaboratorioC?color=green)
 
-## Terminos de uso y condiciones.
+## Terminos de uso y condiciones
 *   Este Respositorio se apropia al uso exclusivo de Javier Almarza y Vicente Salas.
 *   No copien la wea giles culiaos.
 
-## Trabajando para usted.
+## Trabajando para usted
 <img src="./sourceImgs/a.gif" width="300" alt="gato trabajando" style="border:solid 5px black;">
 
 ## Enunciado.
