@@ -19,5 +19,5 @@ La empresa que vende las entradas a Lollapalooza va a generar una súper promoci
 ## Contribuidores.
 
 <img src="./sourceImgs/b.jfif" width="50" height="50" style="border-radius: 50%;"/>
-    <img src="./sourceImgs/c.jfif" width="50" height="50" style="border-radius: 50%;"/>
-    <img src="./sourceImgs/a.jpg"  width="50" height="50" style="border-radius: 50%;"/>
+<img src="./sourceImgs/c.jfif" width="50" height="50" style="border-radius: 50%;"/>
+<img src="./sourceImgs/a.jpg"  width="50" height="50" style="border-radius: 50%;"/>
