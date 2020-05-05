@@ -3,8 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// Variables globales.
-
 // Estructuras.
 // __NODO__
 struct Nodo{
@@ -12,11 +10,97 @@ struct Nodo{
     struct Nodo *sig;
 };
 typedef struct Nodo tNodo;
-
+//Tipo "Lista" que será un puntero a un nodo de la lista
 // __LISTA__
 typedef tNodo *Lista;
 
 // Funciones para las listas.
+
+// Manejo de datos.
+void capturarRut(char *token){
+  printf("\nSe Capturo el rut: %s \n", token);
+
+}
+
+// Manejo de archivos.
+void leerProblema(const char *nombre_archivo){
+    FILE * archivo;
+    char linea[1000],
+    delimitador[] = ",",
+    *token;
+
+    archivo = fopen(nombre_archivo, "r");
+
+    if (archivo == NULL){
+      printf( "No se puede abrir el fichero.\n" );
+      return;
+    }
+
+    while( fgets (linea, 1000, archivo) != NULL ){
+        token = strtok(linea, delimitador);
+        printf("RUT: %s\n", token);
+        capturarRut(token);
+
+        token = strtok(NULL, delimitador);
+        printf("NOMBRE: %s\n", token);
+        
+        token = strtok(NULL, delimitador);
+        printf("ENTRADAS: %s\n", token);
+        printf("-----------------------\n");
+    }
+}
+
+char *ingresoArchivo(int a){
+  // variables locales.
+  char *file = (char *)malloc(1);
+  
+  if(a == 0){
+    printf("Ingrese el nombre del archivo: input.csv \n");
+    file = "input.csv"; // scanf("%s", file);
+  }
+  else {
+    printf("Ingrese el nombre del archivo de salida: manolo.txt \n");
+    file = "manolo.txt"; // scanf("%s", file);
+  }
+
+  return file;
+}
+
+void escribirResultados(const char *nombre_archivo, char *info){
+  FILE * archivo;
+  archivo = fopen(nombre_archivo, "w");
+
+  // Verificacion del archivo.
+  if(archivo == NULL){
+    printf("No se puede abrir el fichero.\n");
+    return;
+  }
+
+  // Escritura
+  fputs(info, archivo);
+  fclose(archivo);
+  printf("Se escribio en el archivo!");
+}
+
+// __init__
+int main(void){
+  // Variables locales.
+  char *archivo = (char *)malloc(1);
+  char *archivoSalida = (char *)malloc(1);  
+  
+  // Ingreso de datos.
+  archivo = ingresoArchivo(0);
+  archivoSalida = ingresoArchivo(1);
+  leerProblema(archivo);  // input.csv
+  
+  
+
+  
+
+  // Escritura de archivos.
+}
+
+/*
 Lista Lista_INICIALIZA(void)
 {
   return NULL;
@@ -29,7 +113,7 @@ Lista Lista_CREA_NODO(char valor)
     aux = (Lista)malloc(sizeof(tNodo));
     if (aux != NULL)
     {
-        *aux->info = valor;
+        aux->info = valor;
         aux->sig = NULL;
     }
     else
@@ -39,16 +123,6 @@ Lista Lista_CREA_NODO(char valor)
     return aux;
 }
 
-// Inserción de datos.
-/*
-  Line: 66  Lista_INSERTA_PRINCIPIO();
-  Line: 76  Lista_INSERTA_FINAL();
-  Line: 94  Lista_INSERTA_EN_POSICION();
-  Line: 128 Lista_INSERTA_ORDENADO();
-  Line: 161 Lista_ELIMINA();
-  Line: 187 Lista_LARGO();
-  Line: 204 Lista_IMPRIME();
-*/
 Lista Lista_INSERTA_PRINCIPIO(Lista L, char x)
 {
     Lista pNodo;
@@ -77,7 +151,6 @@ Lista Lista_INSERTA_FINAL(Lista L, char x)
     pNodo = NULL;
     return L;
 }
-
 
 Lista Lista_INSERTA_ORDENADO(Lista L, char x)
 {
@@ -200,118 +273,4 @@ void Lista_IMPRIME(Lista L)
     printf("NULL");
 
 }
-
-
-
-void escribirResultados(const char *nombre_archivo, char *info){
-  FILE * archivo;
-  archivo = fopen(nombre_archivo, "w");
-
-  // Verificacion del archivo.
-  if(archivo == NULL){
-    printf("No se puede abrir el fichero.\n");
-    return;
-  }
-
-  // Escritura
-  fputs(info, archivo);
-  fclose(archivo);
-  printf("Se escribio en el archivo!");
-}
-
-// Almacenamiento.
-void capturarRut(char *token){
-
-  printf("\nSe Capturo el rut: %s \n", token);
-  printf("la direccion de memoria de 'token' es: %p \n", &token);
-
-  /*
-    char 20581291-1 [8]
-    int 205.812.911
-    
-  */
-  // Trabajando los datos.
-  // Variables locales.
-  Lista L;
-  int pos = 1;
-
-  L = Lista_INICIALIZA();
-  
-  if (pos <= Lista_LARGO(L)+1){
-      L = Lista_INSERTA_EN_POSICION(L, *token, pos);
-  };
-
-  Lista_IMPRIME(L);
-
-
-}
-
-// Manejo de archivos.
-void leerProblema(const char *nombre_archivo){
-    FILE * archivo;
-    char linea[1000],
-    delimitador[] = ",",
-    *token;
-
-    archivo = fopen(nombre_archivo, "r");
-
-    if (archivo == NULL){
-      printf( "No se puede abrir el fichero.\n" );
-      return;
-    }
-
-    while( fgets (linea, 1000, archivo) != NULL ){
-        token = strtok(linea, delimitador);
-        printf("RUT: %s\n", token);
-        capturarRut(token);
-
-        token = strtok(NULL, delimitador);
-        printf("NOMBRE: %s\n", token);
-        
-        token = strtok(NULL, delimitador);
-        printf("ENTRADAS: %s\n", token);
-        printf("-----------------------\n");
-    }
-}
-
-char *ingresoArchivo(int a){
-  // variables locales.
-  char *file = (char *)malloc(1);
-  
-  if(a == 0){
-    printf("Ingrese el nombre del archivo: input.csv \n");
-    file = "input.csv"; // scanf("%s", file);
-  }
-  else {
-    printf("Ingrese el nombre del archivo de salida: manolo.txt \n");
-    file = "manolo.txt"; // scanf("%s", file);
-  }
-
-  return file;
-}
-
-// __init__
-int main(void){
-  // Variables locales.
-  char *archivo = (char *)malloc(1);
-  char *archivoSalida = (char *)malloc(1);  
-    
-  archivo = ingresoArchivo(0);
-  archivoSalida = ingresoArchivo(1);
-  leerProblema(archivo);  // input.csv
-  
-  
-
-  // Escritura de archivos.
-  // escribirResultados(archivoSalida, "Manolo estuvo aqui!");
-
-  
-  
-//funcion lista enlazada  (creacion de lista )
- 
-  
-  // Lista_IMPRIME(L);
-
-
-
-}
+*/
