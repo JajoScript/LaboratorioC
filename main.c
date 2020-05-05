@@ -15,6 +15,34 @@ typedef struct Nodo tNodo;
 typedef tNodo *Lista;
 
 // Funciones para las listas.
+Lista Lista_INICIALIZA(void){ return NULL; };
+
+Lista Lista_CREA_NODO(int valor){
+    Lista aux;
+
+    aux = (Lista)malloc(sizeof(tNodo));
+    if (aux != NULL){
+      aux->info = valor;
+      aux->sig = NULL;
+    }
+    else {
+      system("cls");
+      printf("\n\tERROR: No hay memoria suficiente para generar un nuevo Nodo.");
+    }
+     
+    return aux;
+};
+
+Lista Lista_INSERTA_PRINCIPIO(Lista L, int valor){
+    Lista pNodo;
+
+    pNodo = Lista_CREA_NODO(valor);
+    pNodo->sig = L;
+    L = pNodo;
+    pNodo = NULL;
+    return L;
+};
+
 
 // Manejo de datos.
 void capturarRut(char *token){
@@ -98,41 +126,15 @@ int main(void){
   
 
   // Escritura de archivos.
+
 }
 
 /*
-Lista Lista_INICIALIZA(void)
-{
-  return NULL;
-}
 
-Lista Lista_CREA_NODO(char valor)
-{
-    Lista aux;
 
-    aux = (Lista)malloc(sizeof(tNodo));
-    if (aux != NULL)
-    {
-        aux->info = valor;
-        aux->sig = NULL;
-    }
-    else
-    {
-       
-    }
-    return aux;
-}
 
-Lista Lista_INSERTA_PRINCIPIO(Lista L, char x)
-{
-    Lista pNodo;
 
-    pNodo = Lista_CREA_NODO(x);
-    pNodo->sig = L;
-    L = pNodo;
-    pNodo = NULL;
-    return L;
-}
+
 Lista Lista_INSERTA_FINAL(Lista L, char x)
 {
     Lista pNodo, aux;
@@ -152,39 +154,7 @@ Lista Lista_INSERTA_FINAL(Lista L, char x)
     return L;
 }
 
-Lista Lista_INSERTA_ORDENADO(Lista L, char x)
-{
-    Lista pNodo, aux1, aux2;
 
-    pNodo = Lista_CREA_NODO(x);
-    if (L == NULL)
-        L = pNodo;
-    else
-    {
-        if (x < L->info) //Inserta al principio de L.
-        {
-            pNodo->sig = L;
-            L = pNodo;
-        }
-        else
-        {		//2 ó más Nodos, o inserción al final.
-            aux1 = L;
-            while ((aux1 != NULL) && (aux1->info < x))
-            {
-                aux1 = aux1->sig;
-            }
-            aux2 = L;
-            while (aux2->sig != aux1)
-                aux2 = aux2->sig;
-            aux2->sig = pNodo;
-            pNodo->sig = aux1;
-            aux1 = NULL;
-            aux2 = NULL;
-        }
-    }
-    pNodo = NULL;
-    return L;
-}
 Lista Lista_ELIMINA(Lista L, int p)
 {
     int cont = 1;
