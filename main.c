@@ -4,34 +4,19 @@
 #include <stdlib.h>
 
 // Variables globales.
-char nombres[20][20];
 
-// Estructura de un nodo.
+// Estructuras.
+// __NODO__
 struct Nodo{
-    char *info;
+    int info;
     struct Nodo *sig;
 };
 typedef struct Nodo tNodo;
+
+// __LISTA__
 typedef tNodo *Lista;
 
-/*
-  ---------------
-  | info | *sig |
-  ---------------
-
-  --------------
-  | Rut | *sig |
-  --------------
-
-
-*/
-
-// Construcción de la lista (acá debe ir el rut de la persona).
-/*
-  Lista_INICIALIZA();
-  Lista_CREA_NODO();
-*/
-
+// Funciones para las listas.
 Lista Lista_INICIALIZA(void)
 {
   return NULL;
@@ -240,6 +225,11 @@ void capturarRut(char *token){
   printf("\nSe Capturo el rut: %s \n", token);
   printf("la direccion de memoria de 'token' es: %p \n", &token);
 
+  /*
+    char 20581291-1 [8]
+    int 205.812.911
+    
+  */
   // Trabajando los datos.
   // Variables locales.
   Lista L;
@@ -304,11 +294,12 @@ char *ingresoArchivo(int a){
 int main(void){
   // Variables locales.
   char *archivo = (char *)malloc(1);
-  char *archivoSalida = (char *)malloc(1);
-
+  char *archivoSalida = (char *)malloc(1);  
+    
   archivo = ingresoArchivo(0);
   archivoSalida = ingresoArchivo(1);
   leerProblema(archivo);  // input.csv
+  
   
 
   // Escritura de archivos.
