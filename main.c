@@ -1,22 +1,40 @@
+// Dependencias.
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-// Variables globales
+// Variables globales.
 char nombres[20][20];
 
-//Structura de nodo
+// Estructura de un nodo.
 struct Nodo{
-    char info;
+    char *info;
     struct Nodo *sig;
 };
 typedef struct Nodo tNodo;
 typedef tNodo *Lista;
 
-//Construccion de lista (acá debe ir el rut de la persona)
+/*
+  ---------------
+  | info | *sig |
+  ---------------
+
+  --------------
+  | Rut | *sig |
+  --------------
+
+
+*/
+
+// Construcción de la lista (acá debe ir el rut de la persona).
+/*
+  Lista_INICIALIZA();
+  Lista_CREA_NODO();
+*/
+
 Lista Lista_INICIALIZA(void)
 {
-    return NULL;
+  return NULL;
 }
 
 Lista Lista_CREA_NODO(char valor)
@@ -26,7 +44,7 @@ Lista Lista_CREA_NODO(char valor)
     aux = (Lista)malloc(sizeof(tNodo));
     if (aux != NULL)
     {
-        aux->info = valor;
+        *aux->info = valor;
         aux->sig = NULL;
     }
     else
@@ -35,7 +53,17 @@ Lista Lista_CREA_NODO(char valor)
     }
     return aux;
 }
-//-------------------------------------------------------------------
+
+// Inserción de datos.
+/*
+  Line: 66  Lista_INSERTA_PRINCIPIO();
+  Line: 76  Lista_INSERTA_FINAL();
+  Line: 94  Lista_INSERTA_EN_POSICION();
+  Line: 128 Lista_INSERTA_ORDENADO();
+  Line: 161 Lista_ELIMINA();
+  Line: 187 Lista_LARGO();
+  Line: 204 Lista_IMPRIME();
+*/
 Lista Lista_INSERTA_PRINCIPIO(Lista L, char x)
 {
     Lista pNodo;
@@ -64,39 +92,7 @@ Lista Lista_INSERTA_FINAL(Lista L, char x)
     pNodo = NULL;
     return L;
 }
-Lista Lista_INSERTA_EN_POSICION(Lista L, char x, int pos)
-{
-    Lista pNodo, aux;
-    int i, largo;
 
-    largo = Lista_LARGO(L);
-    pNodo = Lista_CREA_NODO(x);
-    if (pos <= largo+1) //Si p es válido para el largo de la lista.
-    {
-        if (pos == 1)	//Inserta en la primera posición.
-            L = Lista_INSERTA_PRINCIPIO(L, x);
-        else
-        {
-            if (pos == largo+1)           //Inserta en la última posición.
-                L = Lista_INSERTA_FINAL(L, x);
-            else
-            {
-                aux = L;
-                i = 1;
-                while (i < pos-1)
-                {
-                    aux = aux->sig;
-                    i = i+1;
-                }
-                pNodo->sig = aux->sig;
-                aux->sig = pNodo;
-                aux = NULL;
-            }
-        }
-    }
-    pNodo = NULL;
-    return L;
-}
 
 Lista Lista_INSERTA_ORDENADO(Lista L, char x)
 {
@@ -170,7 +166,41 @@ int Lista_LARGO(Lista L)
     }
     return cont;
 }
-//-------------------------------------------------------------
+
+Lista Lista_INSERTA_EN_POSICION(Lista L, char x, int pos)
+{
+    Lista pNodo, aux;
+    int i, largo;
+
+    largo = Lista_LARGO(L);
+    pNodo = Lista_CREA_NODO(x);
+    if (pos <= largo+1) //Si p es válido para el largo de la lista.
+    {
+        if (pos == 1)	//Inserta en la primera posición.
+            L = Lista_INSERTA_PRINCIPIO(L, x);
+        else
+        {
+            if (pos == largo+1)           //Inserta en la última posición.
+                L = Lista_INSERTA_FINAL(L, x);
+            else
+            {
+                aux = L;
+                i = 1;
+                while (i < pos-1)
+                {
+                    aux = aux->sig;
+                    i = i+1;
+                }
+                pNodo->sig = aux->sig;
+                aux->sig = pNodo;
+                aux = NULL;
+            }
+        }
+    }
+    pNodo = NULL;
+    return L;
+}
+
 void Lista_IMPRIME(Lista L)
 {
     Lista aux;
@@ -179,13 +209,13 @@ void Lista_IMPRIME(Lista L)
     printf("\n\n\tL -> ");
     while(aux != NULL)
     {
-        printf("%d -> ", aux->info);
+        printf("%s -> ", aux->info);
         aux = aux->sig;
     }
     printf("NULL");
 
 }
-//-------------------------------------------------------------
+
 
 
 void escribirResultados(const char *nombre_archivo, char *info){
@@ -205,8 +235,25 @@ void escribirResultados(const char *nombre_archivo, char *info){
 }
 
 // Almacenamiento.
-void almacenarRuts(char *token){
-  printf("rut %s", token);
+void capturarRut(char *token){
+
+  printf("\nSe Capturo el rut: %s \n", token);
+  printf("la direccion de memoria de 'token' es: %p \n", &token);
+
+  // Trabajando los datos.
+  // Variables locales.
+  Lista L;
+  int pos = 1;
+
+  L = Lista_INICIALIZA();
+  
+  if (pos <= Lista_LARGO(L)+1){
+      L = Lista_INSERTA_EN_POSICION(L, *token, pos);
+  };
+
+  Lista_IMPRIME(L);
+
+
 }
 
 // Manejo de archivos.
@@ -226,7 +273,7 @@ void leerProblema(const char *nombre_archivo){
     while( fgets (linea, 1000, archivo) != NULL ){
         token = strtok(linea, delimitador);
         printf("RUT: %s\n", token);
-        almacenarRuts(token);
+        capturarRut(token);
 
         token = strtok(NULL, delimitador);
         printf("NOMBRE: %s\n", token);
@@ -242,12 +289,12 @@ char *ingresoArchivo(int a){
   char *file = (char *)malloc(1);
   
   if(a == 0){
-    printf("Ingrese el nombre del archivo: ");
-    scanf("%s", file);
+    printf("Ingrese el nombre del archivo: input.csv \n");
+    file = "input.csv"; // scanf("%s", file);
   }
   else {
-    printf("Ingrese el nombre del archivo de salida: ");
-    scanf("%s", file);
+    printf("Ingrese el nombre del archivo de salida: manolo.txt \n");
+    file = "manolo.txt"; // scanf("%s", file);
   }
 
   return file;
@@ -267,14 +314,10 @@ int main(void){
   // Escritura de archivos.
   // escribirResultados(archivoSalida, "Manolo estuvo aqui!");
 
-  //funcion lista enlazada  (creacion de lista )
-  // Lista L;
-  // L = Lista_INICIALIZA();
-  // char valor = 'a';
-  // int pos = 1;
-  // if (pos <= Lista_LARGO(L)+1){
-  //     L = Lista_INSERTA_EN_POSICION(L, valor, pos);
-  // }
+  
+  
+//funcion lista enlazada  (creacion de lista )
+ 
   
   // Lista_IMPRIME(L);
 
