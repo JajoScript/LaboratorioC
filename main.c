@@ -176,17 +176,6 @@ void Lista_IMPRIME(Lista L){
 
   printf("NULL");
 }
-void CreacionCasillas(int rut, int numeroEntradas, int iterador){
-    Lista L;
-    L = Lista_INICIALIZA();
-    L = Lista_INSERTA_EN_POSICION(L, rut, iterador);
-    L = Lista_INSERTA_EN_POSICION(L, numeroEntradas,iterador+1);
-    //  L -> 123334442 -> 2 -> NULL
-    //        [1] -> [2] iterador = 1
-    //        [3] -> [4] iterador = 3
-
-    Lista_IMPRIME(L);
-};
 
 // Manejo de datos.
 int identificador(char letra){
@@ -215,11 +204,10 @@ int identificador(char letra){
     num = 9;
   }; 
 
-  // printf("\nNumero vale: %d", num);
   return num;
 }
 
-void capturarDatos(char *token, char *entradas, int iterador){
+Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
   // Variables.
   int num, aux, numeroEntradas;
 
@@ -233,29 +221,17 @@ void capturarDatos(char *token, char *entradas, int iterador){
       
       // Calculando por iteraciones.
       if(i == 0){
-       
         num = num * 100000000;
-        // Asignacion incial.
         aux = num;
-       
       }else if(i == 1){
-       
         num = num * 10000000;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 2){
-       
         num = num * 1000000;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 3){
-        
         num = num * 100000;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 4){
         
         num = num * 10000;
@@ -294,12 +270,12 @@ void capturarDatos(char *token, char *entradas, int iterador){
   
   // Calculando las entradas.
   numeroEntradas = identificador(entradas[0]);
-  printf("\nNumero de entradas: %d", numeroEntradas);
-  printf("\nInicio: String %s", token);
-  printf("\nFinal: int %d", aux);
   
-  CreacionCasillas(aux, numeroEntradas, iterador);
+  // Agregando los datos a la lista L.
+  L = Lista_INSERTA_FINAL(L, aux);
+  L = Lista_INSERTA_FINAL(L, numeroEntradas);
 
+  return L;
 };
 
 // Manejo de archivos.
@@ -315,25 +291,29 @@ void leerProblema(const char *nombre_archivo){
       printf( "No se puede abrir el fichero.\n" );
       return;
     }
+    
+    // Creacion de la lista.
+    Lista L;
+    L = Lista_INICIALIZA();
 
     int iterador = 1;
     while( fgets (linea, 1000, archivo) != NULL ){
         rut = strtok(linea, delimitador);
-        printf("\nRUT: %s\n", rut);
-        
-
+          printf("\nRUT: %s", rut);
         nombre = strtok(NULL, delimitador);
-        printf("\nNOMBRE: %s\n", nombre);
-        
+          printf("\nNOMBRE: %s", nombre);
         entradas = strtok(NULL, delimitador);
-        printf("\nENTRADAS: %s\n", entradas);
-
-        capturarDatos(rut, entradas, iterador);
+          printf("\nENTRADAS: %s", entradas);
+        
+        // Manejando la información.
+        L = capturarDatos(rut, entradas, iterador, L);
         iterador = iterador + 2;
-
-
-        printf("\n-----------------------\n");
+        printf("\n-----------------------");
     };
+    
+    // Lista la lista.
+    Lista_IMPRIME(L);
+    
 };
 
 char *ingresoArchivo(int a){
