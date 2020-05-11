@@ -18,6 +18,7 @@ typedef struct Nodo tNodo;
 // __LISTA__
 typedef tNodo *Lista;
 
+
 // Funciones para las listas.
 Lista Lista_INICIALIZA(void){ return NULL; };
 
@@ -334,34 +335,46 @@ void leerProblema(const char *nombre_archivo){
     }printf("\n");
     
     // Necesitamos identificar a cada comprador.
-    // L -> rut -> entradas
+    // L -> rut -> entradas -> rut2 -> entradas2
     // Creamos una Lista paralela.
     // Lista Registrados. (almacenara el rut como identificador )
     // Registrados -> rut -> entradas_registrado (el nodo siguiente sera el numero de entradas que quiere comprar. )
     // Una vez este registrado debemos eliminar el Nodo rut y entradas de la lista L.
     // Ahora que el nodo no esta en la lista buscamos si se encuentra otra vez en la lista L.
     // Si esta en la lista se elimina el rut y se mira el nodo siguiente (entradas.) y se verifica si puede adquirir mas entradas o si supero el tope.
-
-
-
-
-    // Variables locales para manejar las entradas.
-    Lista Registrados;
-    Registrados = Lista_INICIALIZA();
-
-    int limiteEntradas = 2;
-    int entradasTotales;
     
+    // Variables.
+    int posicion, posicion2;
+    int usuario = 0;
 
-    // Buscando el elemento.
-    int pos;
-    pos = Lista_POSICION_ELEMENTO(L, ListaDeRuts[1]);
-    if (ListaDeRuts[1] == 0){
-      printf("\n\tEl elemento %d, no esta en la lista.", ListaDeRuts[1]);
-    }else{
-      printf("\n\tEl elemento %d, esta en la posicion %d de la lista.", ListaDeRuts[1], pos);
-    }
-        
+    // Listas paralelas.
+    Lista L_registrados;
+    Lista L_entradas;
+
+    // Buscando a los weones.
+    posicion = Lista_POSICION_ELEMENTO(L, ListaDeRuts[usuario]); // 1 1 0
+    
+    if(posicion != 0){
+      printf("\nEl elemento se encuentra en la lista.");
+      
+      // Eliminarlo.
+      L = Lista_ELIMINA(L, posicion);
+      Lista_IMPRIME(L);
+    }else {
+      // Buscando si se encuentra registrado.
+      posicion2 = Lista_POSICION_ELEMENTO(L_registrados, ListaDeRuts[usuario]);
+
+      if(posicion2 != 0){
+        usuario++;
+      }else{
+        // Registrarlo.
+        L_registrados = Lista_INSERTA_FINAL(L_registrados, ListaDeRuts[0]); // vicente
+        printf("\nEl elemento ahora se encuentra en la lista registrado.");
+      };
+    };
+
+    // Iteracion.
+    
     // Cerrando el archivo.  
     fclose(archivo);
 };
