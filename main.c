@@ -112,7 +112,7 @@ Lista Lista_INSERTA_ORDENADO(Lista L, int valor){
 
 Lista Lista_INSERTA_EN_POSICION(Lista L, int valor, int posicion){
   Lista pNodo, aux;
-  int i, largo;
+  int largo;
 
   largo = Lista_LARGO(L);
   pNodo = Lista_CREA_NODO(valor);
@@ -125,7 +125,7 @@ Lista Lista_INSERTA_EN_POSICION(Lista L, int valor, int posicion){
         L = Lista_INSERTA_FINAL(L, valor);
       } else {
         aux = L;
-        i = 1;
+        int i = 1;
           
         while (i < posicion-1){
           aux = aux->sig;
@@ -144,7 +144,6 @@ Lista Lista_INSERTA_EN_POSICION(Lista L, int valor, int posicion){
 };
 
 Lista Lista_ELIMINA(Lista L, int p){
-    int cont = 1;
     Lista aux, aux2;
 
     aux = L;
@@ -153,6 +152,8 @@ Lista Lista_ELIMINA(Lista L, int p){
       aux->sig = NULL;
       free(aux);
     } else {
+      int cont = 1;
+
       while (cont < p-1) {
         aux = aux->sig;
         cont++;
@@ -217,7 +218,7 @@ int identificador(char letra){
     num = 7;
   } else if(letra == '8'){
     num = 8;
-  } else if(letra == '9'){
+  } else {
     num = 9;
   }; 
 
@@ -341,7 +342,8 @@ void leerProblema(const char *nombre_archivo){
       printf("\n\tEl elemento %d, esta en la posicion %d de la lista.", ListaDeRuts[1], pos);
     }
                     
-                 
+
+    // Cerrando el archivo.  
     fclose(archivo);
 };
 
@@ -385,7 +387,7 @@ int main(void){
   
   // Ingreso de datos.
   archivo = ingresoArchivo(0);
-  archivoSalida = ingresoArchivo(1);
+  // archivoSalida = ingresoArchivo(1);
   leerProblema(archivo);  // input.csv
   
   
