@@ -22,38 +22,51 @@ La empresa que vende las entradas a Lollapalooza va a generar una súper promoci
 
 ## Documentación
 *   Nodos y Listas.
-    
+
+    ```c
+    Lista Lista_INICIALIZA(void){ ... }
     ```
-        Lista Lista_INICIALIZA(void){ ... }
-    ```
-    
+
     *Inicializa la lista para poder ser utilizada en un momento futuro.*   
 
-        Lista Lista_CREA_NODO(int valor){ ... }
-    
+    ```c
+    Lista Lista_CREA_NODO(int valor){ ... }
+    ```
+
     *Crea un nodo que almacenara el **valor** que se le entregue.*
 
-        Lista Lista_INSERTA_PRINCIPIO(Lista L, int valor){ ... }
+    ```c
+    Lista Lista_INSERTA_PRINCIPIO(Lista L, int valor){ ... }
+    ```
 
     *Crea un nodo que toma el **valor** recibido como parametro y lo inserta al comienzo de la lista **L** que se le entregue como parametro.*
 
-        Lista Lista_INSERTA_FINAL(Lista L, int valor){ ... }
-    
+    ```c
+    Lista Lista_INSERTA_FINAL(Lista L, int valor){ ... }
+    ```
+
     *Crea un nodo que toma el **valor** recibido como parametro y lo inserta al final de la lista **L** que se le entregue como parametro.*
 
-        int Lista_LARGO(Lista L){ ... }
-    
+    ```c
+    int Lista_LARGO(Lista L){ ... }
+    ```
+
     *Retorna un valor entero que corresponde al largo de la lista **L** que se le pase como parametro.*
 
 
 *   Manejo de archivos.
     
-    `function():`
+    ```c
+    function():
+    ```
     
-| Command | Description |
+
+## Comandos para el uso de git
+
+| Comandos | Descripción |
 | --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+| git status | Ver la lista de archivos modificados. |
+| git diff | Mostrar las diferencias en los archivos que no se han agregado. |
 
 ## Contribuidores
 Este proyecto existe gracias a todas las personas que contribuyen.
