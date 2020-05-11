@@ -167,6 +167,7 @@ Lista Lista_ELIMINA(Lista L, int p){
 
     return L;
 };
+
 int Lista_POSICION_ELEMENTO(Lista L, int x){
     Lista aux;
     int pos=0;
@@ -319,14 +320,12 @@ void leerProblema(const char *nombre_archivo){
           printf("\n-----------------------");
           iterador = iterador + 1;
       };
-    }
-    
-    
-    
+    };
     
     // Lista la lista.
     Lista_IMPRIME(L);
     
+    // Mostrar lista de ruts. (DEPURACION)
     int i = 0;
     printf("\n");
     while(i <= 5){
@@ -334,6 +333,26 @@ void leerProblema(const char *nombre_archivo){
       i++;
     }printf("\n");
     
+    // Necesitamos identificar a cada comprador.
+    // L -> rut -> entradas
+    // Creamos una Lista paralela.
+    // Lista Registrados. (almacenara el rut como identificador )
+    // Registrados -> rut -> entradas_registrado (el nodo siguiente sera el numero de entradas que quiere comprar. )
+    // Una vez este registrado debemos eliminar el Nodo rut y entradas de la lista L.
+    // Ahora que el nodo no esta en la lista buscamos si se encuentra otra vez en la lista L.
+    // Si esta en la lista se elimina el rut y se mira el nodo siguiente (entradas.) y se verifica si puede adquirir mas entradas o si supero el tope.
+
+
+
+
+    // Variables locales para manejar las entradas.
+    Lista Registrados;
+    Registrados = Lista_INICIALIZA();
+
+    int limiteEntradas = 2;
+    int entradasTotales;
+    
+
     // Buscando el elemento.
     int pos;
     pos = Lista_POSICION_ELEMENTO(L, ListaDeRuts[1]);
@@ -342,7 +361,7 @@ void leerProblema(const char *nombre_archivo){
     }else{
       printf("\n\tEl elemento %d, esta en la posicion %d de la lista.", ListaDeRuts[1], pos);
     }
-                    
+        
     // Cerrando el archivo.  
     fclose(archivo);
 };
