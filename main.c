@@ -288,36 +288,40 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
 // Manejo de archivos.
 void leerProblema(const char *nombre_archivo){
     FILE * archivo;
-    char linea[1000],
-    delimitador[] = ",",
-    *rut, *entradas, *nombre;
-
     archivo = fopen(nombre_archivo, "r");
 
-    if (archivo == NULL){
-      printf( "No se puede abrir el fichero.\n" );
-      return;
-    }
-    
     // Creacion de la lista.
     Lista L;
     L = Lista_INICIALIZA();
 
-    int iterador = 0;
-    while( fgets (linea, 1000, archivo) != NULL ){
-        rut = strtok(linea, delimitador);
-          printf("\nRUT: %s", rut);
-        nombre = strtok(NULL, delimitador);
-          printf("\nNOMBRE: %s", nombre);
-        entradas = strtok(NULL, delimitador);
-          printf("\nENTRADAS: %s", entradas);
-        
-        // Manejando la información.
-        L = capturarDatos(rut, entradas, iterador, L);
-        
-        printf("\n-----------------------");
-        iterador = iterador + 1;
-    };
+    if (archivo == NULL){
+      printf( "No se puede abrir el fichero.\n" );
+      return;
+    }else {
+      
+
+      // Variables para la captura de datos.
+      char linea[1000],
+      delimitador[] = ",", *rut, *entradas, *nombre;
+
+      int iterador = 0;
+      while( fgets (linea, 1000, archivo) != NULL ){
+          rut = strtok(linea, delimitador);
+            printf("\nRUT: %s", rut);
+          nombre = strtok(NULL, delimitador);
+            printf("\nNOMBRE: %s", nombre);
+          entradas = strtok(NULL, delimitador);
+            printf("\nENTRADAS: %s", entradas);
+          
+          // Manejando la información.
+          L = capturarDatos(rut, entradas, iterador, L);
+          
+          printf("\n-----------------------");
+          iterador = iterador + 1;
+      };
+    }
+    
+    
     
     
     // Lista la lista.
@@ -339,7 +343,6 @@ void leerProblema(const char *nombre_archivo){
       printf("\n\tEl elemento %d, esta en la posicion %d de la lista.", ListaDeRuts[1], pos);
     }
                     
-
     // Cerrando el archivo.  
     fclose(archivo);
 };
