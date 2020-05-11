@@ -5,6 +5,7 @@
 
 // Variable global.
 int ListaDeRuts[10];
+int ListaDeEntradas[10];
 
 // Estructuras.
 // __NODO__
@@ -279,6 +280,7 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
   
   // Agregando los rut a un vector.
   ListaDeRuts[iterador] = aux;
+  ListaDeEntradas[iterador] = numeroEntradas;
 
   // Agregando los datos a la lista L.
   L = Lista_INSERTA_FINAL(L, aux);
@@ -333,6 +335,14 @@ void leerProblema(const char *nombre_archivo){
       printf("%d,", ListaDeRuts[i]);
       i++;
     }printf("\n");
+
+    // Mostrar las entradas
+    i = 0;
+    printf("\n");
+    while(i <= 5){
+      printf("%d,", ListaDeEntradas[i]);
+      i++;
+    }printf("\n");
     
     // Necesitamos identificar a cada comprador.
     // L -> rut -> entradas -> rut2 -> entradas2
@@ -346,35 +356,83 @@ void leerProblema(const char *nombre_archivo){
     // Variables.
     int posicion, posicion2;
     int usuario = 0;
+    int entradasTotales = 0; 
+    int num;
 
     // Listas paralelas.
     Lista L_registrados;
+    L_registrados = Lista_INICIALIZA();
     Lista L_entradas;
+    L_entradas = Lista_INICIALIZA();
+    Lista L_auxiliar;
+    L_auxiliar = Lista_INICIALIZA();
 
     // Buscando a los weones.
-    posicion = Lista_POSICION_ELEMENTO(L, ListaDeRuts[usuario]); // 1 1 0
+     // 12 -> 2
     
-    if(posicion != 0){
-      printf("\nEl elemento se encuentra en la lista.");
-      
-      // Eliminarlo.
-      L = Lista_ELIMINA(L, posicion);
-      Lista_IMPRIME(L);
-    }else {
-      // Buscando si se encuentra registrado.
-      posicion2 = Lista_POSICION_ELEMENTO(L_registrados, ListaDeRuts[usuario]);
+    //     ListaDeRuts[usuario = 0] = vicente, ListaDeRuts[usuario = 5] = vicente
+    // ListaDeEntradas[usuario = 0] = 1,    ListaDeEntradas[usuario = 5] = 2
+    
+    while(usuario <= 5){
+      posicion = Lista_POSICION_ELEMENTO(L, ListaDeRuts[usuario]);
+      if(posicion != 0){
+        printf("\nEl elemento %d se encuentra en la lista.", ListaDeRuts[usuario]);
 
-      if(posicion2 != 0){
-        usuario++;
-      }else{
-        // Registrarlo.
-        L_registrados = Lista_INSERTA_FINAL(L_registrados, ListaDeRuts[0]); // vicente
-        printf("\nEl elemento ahora se encuentra en la lista registrado.");
+        if(entradasTotales == 0){
+          if(ListaDeEntradas[usuario] > 2){
+            entradasTotales = 2;
+          }else {
+            entradasTotales = ListaDeEntradas[usuario];
+          }
+          printf("\nEl usuario tiene %d nuevas entradas", entradasTotales);
+        }else{
+          entradasTotales = entradasTotales + ListaDeEntradas[usuario];
+          printf("\nEl usuario tiene %d en total", entradasTotales);
+
+          // Verificacion de entradas.
+          if(entradasTotales <= 2){
+            printf("\nEl usuario puede comprar las entradas");
+          }else if(entradasTotales > 2){
+            printf("\nEl usuario solo puede 2 comprar las entradas, no %d", entradasTotales);
+            entradasTotales = 2;
+          }
+          else {
+            printf("\nEl usuario no puede comprar las entradas");
+          }
+        }
+        // Eliminarlo.
+        L = Lista_ELIMINA(L, posicion);
+        
+        Lista_IMPRIME(L);
+      }else {
+        // Buscando si se encuentra registrado.
+        posicion2 = Lista_POSICION_ELEMENTO(L_registrados, ListaDeRuts[usuario]);
+        
+        if(posicion2 != 0){
+          usuario++;
+
+          if(entradasTotales > 0){
+            printf("\nEl usuario finalmente tiene %d entradas", entradasTotales);
+
+            L_entradas = Lista_INSERTA_FINAL(L_entradas, entradasTotales); // EntradasVicente
+
+            printf("\n------------");
+            Lista_IMPRIME(L_registrados);
+            Lista_IMPRIME(L_entradas);
+            printf("\n------------");
+
+            entradasTotales = 0;
+            printf("\nSaltando al siguiente usuario");
+          }
+          
+        }else{
+          // Registrarlo.
+          L_registrados = Lista_INSERTA_FINAL(L_registrados, ListaDeRuts[usuario]); // vicente
+          printf("\nEl elemento ahora se encuentra en la lista registrado.");
+        };
       };
     };
 
-    // Iteracion.
-    
     // Cerrando el archivo.  
     fclose(archivo);
 };
