@@ -10,6 +10,10 @@
 *   Este Respositorio se apropia al uso exclusivo de Javier Almarza y Vicente Salas.
 *   No copien la wea giles culiaos.
 
+## Pendiente
+- [ ] Identificar el limite de entradas.
+- [ ] Almacenar los usuarios que ya compraron.
+
 ## Trabajando para usted
 <img src="./sourceImgs/a.gif" width="300" alt="gato trabajando" style="border:solid 5px black;">
 
@@ -19,7 +23,9 @@ La empresa que vende las entradas a Lollapalooza va a generar una súper promoci
 ## Documentación
 *   Nodos y Listas.
     
+    ```
         Lista Lista_INICIALIZA(void){ ... }
+    ```
     
     *Inicializa la lista para poder ser utilizada en un momento futuro.*   
 
@@ -43,6 +49,11 @@ La empresa que vende las entradas a Lollapalooza va a generar una súper promoci
 *   Manejo de archivos.
     
     `function():`
+    
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
 
 ## Contribuidores
 Este proyecto existe gracias a todas las personas que contribuyen.
