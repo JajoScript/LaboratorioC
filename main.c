@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+// Variable global.
+int ListaDeRuts[10];
+
 // Estructuras.
 // __NODO__
 struct Nodo{
@@ -163,6 +166,20 @@ Lista Lista_ELIMINA(Lista L, int p){
 
     return L;
 };
+int Lista_POSICION_ELEMENTO(Lista L, int x){
+    Lista aux;
+    int pos=0;
+
+    aux = L;
+    while (aux != NULL)
+    {
+        pos++;
+        if (aux->info == x)
+            return pos;
+        aux = aux->sig;
+    }
+    return 0;
+}
 
 void Lista_IMPRIME(Lista L){
   Lista aux;
@@ -233,36 +250,22 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
         num = num * 100000;
         aux = aux + num;
       }else if(i == 4){
-        
         num = num * 10000;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 5){
-        
         num = num * 1000;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 6){
-        
         num = num * 100;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 7){
-        
         num = num * 10;
-        // Aritmetica
         aux = aux + num;
-        
       }else if(i == 9){
-        
         num = num * 1;
-        // Aritmetica
         aux = aux + num;
-        
       };
+
     };
 
     i++;
@@ -271,6 +274,9 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
   // Calculando las entradas.
   numeroEntradas = identificador(entradas[0]);
   
+  // Agregando los rut a un vector.
+  ListaDeRuts[iterador] = aux;
+
   // Agregando los datos a la lista L.
   L = Lista_INSERTA_FINAL(L, aux);
   L = Lista_INSERTA_FINAL(L, numeroEntradas);
@@ -296,7 +302,7 @@ void leerProblema(const char *nombre_archivo){
     Lista L;
     L = Lista_INICIALIZA();
 
-    int iterador = 1;
+    int iterador = 0;
     while( fgets (linea, 1000, archivo) != NULL ){
         rut = strtok(linea, delimitador);
           printf("\nRUT: %s", rut);
@@ -307,12 +313,36 @@ void leerProblema(const char *nombre_archivo){
         
         // Manejando la información.
         L = capturarDatos(rut, entradas, iterador, L);
-        iterador = iterador + 2;
+        
+        
         printf("\n-----------------------");
+        iterador = iterador + 1;
     };
+    
     
     // Lista la lista.
     Lista_IMPRIME(L);
+    
+    int i = 0;
+    printf("\n");
+    while(i <= 5){
+      printf("%d,", ListaDeRuts[i]);
+      // ListaDeRuts[0] = 123334442
+      i++;
+    }printf("\n");
+    
+    
+    // Buscando el elemento.
+    int pos;
+    pos = Lista_POSICION_ELEMENTO(L, ListaDeRuts[1]);
+    if (ListaDeRuts[1] == 0){
+      printf("\n\tEl elemento %d, no esta en la lista.", ListaDeRuts[1]);
+    }else{
+      printf("\n\tEl elemento %d, esta en la posicion %d de la lista.", ListaDeRuts[1], pos);
+    }
+                    
+                 
+                
     
 };
 
