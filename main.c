@@ -315,7 +315,6 @@ void leerProblema(const char *nombre_archivo){
         // Manejando la información.
         L = capturarDatos(rut, entradas, iterador, L);
         
-        
         printf("\n-----------------------");
         iterador = iterador + 1;
     };
@@ -328,10 +327,8 @@ void leerProblema(const char *nombre_archivo){
     printf("\n");
     while(i <= 5){
       printf("%d,", ListaDeRuts[i]);
-      // ListaDeRuts[0] = 123334442
       i++;
     }printf("\n");
-    
     
     // Buscando el elemento.
     int pos;
@@ -383,7 +380,7 @@ void escribirResultados(const char *nombre_archivo, char *info){
 int main(void){
   // Variables locales.
   char *archivo = (char *)malloc(1);
-  char *archivoSalida = (char *)malloc(1);  
+  // char *archivoSalida = (char *)malloc(1);  
   
   // Ingreso de datos.
   archivo = ingresoArchivo(0);
