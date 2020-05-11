@@ -342,8 +342,7 @@ void leerProblema(const char *nombre_archivo){
     }
                     
                  
-                
-    
+    fclose(archivo);
 };
 
 char *ingresoArchivo(int a){
