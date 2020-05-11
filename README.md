@@ -12,9 +12,8 @@
 *   Aún no entendemos para que piden un MakeFile.
 
 ## Pendiente
-* [ ] Identificar el limite de entradas.
-* [ ] Almacenar los usuarios que ya compraron.
-
+*   [ ] Identificar el limite de entradas.
+*   [ ] Almacenar los usuarios que ya compraron.
 
 ## Trabajando para usted
 <img src="./sourceImgs/a.gif" width="300" alt="gato trabajando" style="border:solid 5px black;">
@@ -65,10 +64,10 @@ La empresa que vende las entradas a Lollapalooza va a generar una súper promoci
 
 ## Comandos para el uso de git
 
-| Comandos | Descripción |
-| --- | --- |
-| git status | Ver la lista de archivos modificados. |
-| git diff | Mostrar las diferencias en los archivos que no se han agregado. |
+| Comandos   | Descripción                                                     |
+| ---        | ---                                                             |
+| git status | Ver la lista de archivos modificados.                           |
+| git diff   | Mostrar las diferencias en los archivos que no se han agregado. |
 
 ## Contribuidores
 Este proyecto existe gracias a todas las personas que contribuyen.
