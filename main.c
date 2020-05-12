@@ -1,11 +1,11 @@
+/*
+  Autores: Javier Almarza y Vicente Salas.
+*/
+
 // Dependencias.
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-// Variable global.
-int ListaDeRuts[10];
-int ListaDeEntradas[10];
 
 // Estructuras.
 // __NODO__
@@ -18,7 +18,6 @@ typedef struct Nodo tNodo;
 //Tipo "Lista" que será un puntero a un nodo de la lista
 // __LISTA__
 typedef tNodo *Lista;
-
 
 // Funciones para las listas.
 Lista Lista_INICIALIZA(void){ return NULL; };
@@ -198,11 +197,17 @@ void Lista_IMPRIME(Lista L){
   printf("NULL");
 }
 
-// Manejo de datos.
+// Variables globales.
+int ListaDeRuts[10];
+int ListaDeEntradas[10];
+char ListaDeNombres[80][80];
+
+// Funciones para el manejo de datos.
 int identificador(char letra){
-  // Variables.
+  // Variables locales.
   int num;
 
+  // Condicionales para cada cifra.
   if(letra == '0'){
     num = 0;
   } else if(letra == '1'){
@@ -225,22 +230,28 @@ int identificador(char letra){
     num = 9;
   }; 
 
+  // Retorno de la letra en tipo int.
   return num;
-}
+};
 
 Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
-  // Variables.
+  // Variables locales.
   int num, aux, numeroEntradas;
+  int i = 0;
 
   // Cambiando el tipo de dato de char a int.
   // 205.812.911 <=> String token
   // 0123456789 <=> int, se tiene que omitir el [8]
-  int i = 0;
+
+  // Ciclo iterador para transformar los Ruts.
+  // Según las cifras => Unidades, decenas, centenas, ...
   while(i <= 9){
+    // Se omite el indice 8, ya que contiene el caracter '-'.
     if(i != 8){
+      // Identificando la cifra.
       num = identificador(token[i]);
       
-      // Calculando por iteraciones.
+      // Calculando por iteraciones las cifras.
       if(i == 0){
         num = num * 100000000;
         aux = num;
@@ -269,9 +280,9 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
         num = num * 1;
         aux = aux + num;
       };
-
     };
-
+    
+    // Iteración del ciclo.
     i++;
   };
   
@@ -281,6 +292,7 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
   // Agregando los rut a un vector.
   ListaDeRuts[iterador] = aux;
   ListaDeEntradas[iterador] = numeroEntradas;
+  
 
   // Agregando los datos a la lista L.
   L = Lista_INSERTA_FINAL(L, aux);
@@ -289,173 +301,28 @@ Lista capturarDatos(char *token, char *entradas, int iterador, Lista L){
   return L;
 };
 
-// Manejo de archivos.
-void leerProblema(const char *nombre_archivo){
-    FILE * archivo;
-    archivo = fopen(nombre_archivo, "r");
-
-    // Creacion de la lista.
-    Lista L;
-    L = Lista_INICIALIZA();
-
-    if (archivo == NULL){
-      printf( "No se puede abrir el fichero.\n" );
-      return;
-    }else {
-      
-
-      // Variables para la captura de datos.
-      char linea[1000],
-      delimitador[] = ",", *rut, *entradas, *nombre;
-
-      int iterador = 0;
-      while( fgets (linea, 1000, archivo) != NULL ){
-          rut = strtok(linea, delimitador);
-            printf("\nRUT: %s", rut);
-          nombre = strtok(NULL, delimitador);
-            printf("\nNOMBRE: %s", nombre);
-          entradas = strtok(NULL, delimitador);
-            printf("\nENTRADAS: %s", entradas);
-          
-          // Manejando la información.
-          L = capturarDatos(rut, entradas, iterador, L);
-          
-          printf("\n-----------------------");
-          iterador = iterador + 1;
-      };
-    };
-    
-    // Lista la lista.
-    Lista_IMPRIME(L);
-    
-    // Mostrar lista de ruts. (DEPURACION)
-    int i = 0;
-    printf("\n");
-    while(i <= 5){
-      printf("%d,", ListaDeRuts[i]);
-      i++;
-    }printf("\n");
-
-    // Mostrar las entradas
-    i = 0;
-    printf("\n");
-    while(i <= 5){
-      printf("%d,", ListaDeEntradas[i]);
-      i++;
-    }printf("\n");
-    
-    // Necesitamos identificar a cada comprador.
-    // L -> rut -> entradas -> rut2 -> entradas2
-    // Creamos una Lista paralela.
-    // Lista Registrados. (almacenara el rut como identificador )
-    // Registrados -> rut -> entradas_registrado (el nodo siguiente sera el numero de entradas que quiere comprar. )
-    // Una vez este registrado debemos eliminar el Nodo rut y entradas de la lista L.
-    // Ahora que el nodo no esta en la lista buscamos si se encuentra otra vez en la lista L.
-    // Si esta en la lista se elimina el rut y se mira el nodo siguiente (entradas.) y se verifica si puede adquirir mas entradas o si supero el tope.
-    
-    // Variables.
-    int posicion, posicion2;
-    int usuario = 0;
-    int entradasTotales = 0; 
-    int num;
-
-    // Listas paralelas.
-    Lista L_registrados;
-    L_registrados = Lista_INICIALIZA();
-    Lista L_entradas;
-    L_entradas = Lista_INICIALIZA();
-    Lista L_auxiliar;
-    L_auxiliar = Lista_INICIALIZA();
-
-    // Buscando a los weones.
-     // 12 -> 2
-    
-    //     ListaDeRuts[usuario = 0] = vicente, ListaDeRuts[usuario = 5] = vicente
-    // ListaDeEntradas[usuario = 0] = 1,    ListaDeEntradas[usuario = 5] = 2
-    
-    while(usuario <= 5){
-      posicion = Lista_POSICION_ELEMENTO(L, ListaDeRuts[usuario]);
-      if(posicion != 0){
-        printf("\nEl elemento %d se encuentra en la lista.", ListaDeRuts[usuario]);
-
-        if(entradasTotales == 0){
-          if(ListaDeEntradas[usuario] > 2){
-            entradasTotales = 2;
-          }else {
-            entradasTotales = ListaDeEntradas[usuario];
-          }
-          printf("\nEl usuario tiene %d nuevas entradas", entradasTotales);
-        }else{
-          entradasTotales = entradasTotales + ListaDeEntradas[usuario];
-          printf("\nEl usuario tiene %d en total", entradasTotales);
-
-          // Verificacion de entradas.
-          if(entradasTotales <= 2){
-            printf("\nEl usuario puede comprar las entradas");
-          }else if(entradasTotales > 2){
-            printf("\nEl usuario solo puede 2 comprar las entradas, no %d", entradasTotales);
-            entradasTotales = 2;
-          }
-          else {
-            printf("\nEl usuario no puede comprar las entradas");
-          }
-        }
-        // Eliminarlo.
-        L = Lista_ELIMINA(L, posicion);
-        
-        Lista_IMPRIME(L);
-      }else {
-        // Buscando si se encuentra registrado.
-        posicion2 = Lista_POSICION_ELEMENTO(L_registrados, ListaDeRuts[usuario]);
-        
-        if(posicion2 != 0){
-          usuario++;
-
-          if(entradasTotales > 0){
-            printf("\nEl usuario finalmente tiene %d entradas", entradasTotales);
-
-            L_entradas = Lista_INSERTA_FINAL(L_entradas, entradasTotales); // EntradasVicente
-
-            printf("\n------------");
-            Lista_IMPRIME(L_registrados);
-            Lista_IMPRIME(L_entradas);
-            printf("\n------------");
-
-            entradasTotales = 0;
-            printf("\nSaltando al siguiente usuario");
-          }
-          
-        }else{
-          // Registrarlo.
-          L_registrados = Lista_INSERTA_FINAL(L_registrados, ListaDeRuts[usuario]); // vicente
-          printf("\nEl elemento ahora se encuentra en la lista registrado.");
-        };
-      };
-    };
-
-    // Cerrando el archivo.  
-    fclose(archivo);
-};
-
+// *** Manejo de archivos. ***
 char *ingresoArchivo(int a){
-  // variables locales.
+  // Variables locales.
   char *file = (char *)malloc(1);
   
+  // Dependiendo del valor, mostrara uno de los mensajes.
   if(a == 0){
-    printf("Ingrese el nombre del archivo: input.csv \n");
-    file = "input.csv"; // scanf("%s", file);
+    printf("\nIngrese el nombre del archivo: ");
+    scanf("%s", file);
   }
   else {
-    printf("Ingrese el nombre del archivo de salida: manolo.txt \n");
-    file = "manolo.txt"; // scanf("%s", file);
+    printf("\nIngrese el nombre del archivo de salida: ");
+    scanf("%s", file);
   }
 
+  // Retorna el nombre del archivo.
   return file;
 }
 
 void escribirResultados(const char *nombre_archivo, char *info){
   FILE * archivo;
-  archivo = fopen(nombre_archivo, "w");
+  archivo = fopen(nombre_archivo, "a");
 
   // Verificacion del archivo.
   if(archivo == NULL){
@@ -466,24 +333,211 @@ void escribirResultados(const char *nombre_archivo, char *info){
   // Escritura
   fputs(info, archivo);
   fclose(archivo);
-  printf("Se escribio en el archivo!");
+  // printf("\nSe escribio en el archivo!"); [DEPURACION]
 }
+
+// Funcion ejecutadora del programa.
+void leerProblema(const char *nombre_archivo){
+    // Manejo de archivos.
+    FILE * archivo;
+    archivo = fopen(nombre_archivo, "r");
+
+    // Creacion de la lista.
+    Lista L;
+    L = Lista_INICIALIZA();
+
+    // Validación del input.
+    if (archivo == NULL){
+      printf( "No se puede abrir el fichero.\n" );
+      return;
+    } else {
+      // Variables para la captura de datos.
+      char linea[1000],
+      delimitador[] = ",", *rut, *entradas, *nombre;
+      int iterador = 0;
+
+      // Ciclo para la captura de información.
+      while( fgets (linea, 1000, archivo) != NULL ){
+          rut = strtok(linea, delimitador);
+          // printf("\nRUT: %s", rut); [Depuracion]
+          nombre = strtok(NULL, delimitador);
+          //printf("\nNOMBRE: %s", nombre); [Depuracion]
+          
+          // Almacenando los nombres.
+          strcpy(ListaDeNombres[iterador], nombre);
+
+          entradas = strtok(NULL, delimitador);
+          // printf("\nENTRADAS: %s", entradas); [Depuracion]
+          
+          // Manejando la información.
+          L = capturarDatos(rut, entradas, iterador, L);
+          
+          // printf("\n-----------------------"); [Depuracion]
+          iterador++;
+      };
+
+      // Variables locales.
+      int j;
+      int verificacion;
+      int i = 0;
+      char *listaAlternativa;
+
+      // Ciclo para determinar los nombres repetidos.
+      while(i <= iterador - 1){
+        listaAlternativa = ListaDeNombres[i];
+        // printf("\nNOMBRE NOMBRE:%s", listaAlternativa);
+
+        j = i + 1;
+        while(j <= iterador-1){
+          verificacion = memcmp(listaAlternativa,ListaDeNombres[j], 80);
+          if (verificacion == 0){
+            strcpy(ListaDeNombres[j], ListaDeNombres[j + 1]);
+          };
+          j++;
+        };
+        i++;
+      };
+    };
+  
+    // Variables locales.
+    int posicion, posicion2;
+    int usuario = 0;
+    int entradasTotales = 0; 
+    int num;
+
+    // Listas paralelas.
+    Lista L_registrados;
+    L_registrados = Lista_INICIALIZA();
+    Lista L_entradas;
+    L_entradas = Lista_INICIALIZA(); 
+    Lista L_nombres;
+    
+    Lista L_auxiliar;
+    L_auxiliar = Lista_INICIALIZA();
+
+    while(usuario <= 5){
+      posicion = Lista_POSICION_ELEMENTO(L, ListaDeRuts[usuario]);
+      if(posicion != 0){
+       // printf("\nEl elemento %d se encuentra en la lista.", ListaDeRuts[usuario]) DEPURACION;
+
+        if(entradasTotales == 0){
+          if(ListaDeEntradas[usuario] > 2){
+            entradasTotales = 2;
+          }else {
+            entradasTotales = ListaDeEntradas[usuario];
+          }
+         // printf("\nEl usuario tiene %d nuevas entradas", entradasTotales) DEPURACION;
+        }else{
+          entradasTotales = entradasTotales + ListaDeEntradas[usuario];
+         // printf("\nEl usuario tiene %d en total", entradasTotales);
+
+          // Verificacion de entradas.
+          if(entradasTotales <= 2){
+           //printf("\nEl usuario puede comprar las entradas");
+          }else if(entradasTotales > 2){
+           // printf("\nEl usuario solo puede 2 comprar las entradas, no %d", entradasTotales);
+            entradasTotales = 2;
+          }
+          else {
+           // printf("\nEl usuario no puede comprar las entradas");
+          }
+        }
+        // Eliminarlo.
+        L = Lista_ELIMINA(L, posicion);
+        
+       // Lista_IMPRIME(L) DEPURACION;
+      }else {
+        // Buscando si se encuentra registrado.
+        posicion2 = Lista_POSICION_ELEMENTO(L_registrados, ListaDeRuts[usuario]);
+        
+        if(posicion2 != 0){
+          usuario++;
+
+          if(entradasTotales > 0){
+           // printf("\nEl usuario finalmente tiene %d entradas", entradasTotales);
+
+            L_entradas = Lista_INSERTA_FINAL(L_entradas, entradasTotales); // EntradasVicente
+
+           // printf("\n------------");
+           // Lista_IMPRIME(L_registrados);
+           // Lista_IMPRIME(L_entradas);
+           // printf("\n------------");
+
+            entradasTotales = 0;
+           // printf("\nSaltando al siguiente usuario");
+          }
+          
+        }else{
+          // Registrarlo.
+          L_registrados = Lista_INSERTA_FINAL(L_registrados, ListaDeRuts[usuario]); // vicente
+         // printf("\nEl elemento ahora se encuentra en la lista registrado.");
+        };
+      };
+    };
+
+    // Declarando el archivo de salida.
+    char *archivoSalida = (char *)malloc(1);  
+    archivoSalida = ingresoArchivo(1);
+
+    // Contenedores.
+    char rutString[100];
+    char nombreString[100];
+    char entradaString[100];
+    
+    // Variables para el ciclo.
+    int largo;
+    int iteradora = 1;
+    int nombreiteracion = 0;
+
+    // Listas auxiliares.
+    Lista aux;
+    aux = L_registrados;
+    
+    Lista aux2;
+    aux2 = L_entradas;
+
+    Lista aux3;
+    aux3 = L_nombres;
+
+    largo = Lista_LARGO(L_registrados);
+    //printf("\nLo que queremos transformar:\n");
+    while(iteradora <= largo){
+      // printf("%d ", aux->info);
+
+      // Escribir ruts.
+      sprintf(rutString, "%d,", aux->info);
+      escribirResultados(archivoSalida, rutString);
+
+      // Escribir nombres.
+      sprintf(nombreString, "%s,", ListaDeNombres[nombreiteracion]);
+      escribirResultados(archivoSalida, nombreString);
+
+      // Escribir las entradas.
+      sprintf(entradaString, "%d\n", aux2->info);
+      escribirResultados(archivoSalida, entradaString);
+
+      
+      // Iteracion;
+      aux = aux->sig;
+      aux2 = aux2->sig;
+      nombreiteracion++;
+      iteradora++;
+    };
+    
+    //printf("\nListo!, se guardaron los resultados.");
+
+    // Cerrando el archivo.  
+    fclose(archivo);
+};
 
 // __init__
 int main(void){
   // Variables locales.
   char *archivo = (char *)malloc(1);
-  // char *archivoSalida = (char *)malloc(1);  
-  
+
   // Ingreso de datos.
   archivo = ingresoArchivo(0);
-  // archivoSalida = ingresoArchivo(1);
   leerProblema(archivo);  // input.csv
   
-  
-
-  
-
-  // Escritura de archivos.
-
-}
+  return 0;
+};
